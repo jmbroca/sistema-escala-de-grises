@@ -69,20 +69,59 @@ input[type="file"] {
 }
 
 /* Barra de progreso */
-.progress-bar {
-    width: 100%;
-    background: #eee;
-    height: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 15px;
+/* Contenedor de la barra */
+.progress-wrapper {
+    margin: 20px 0;
+    text-align: center;
 }
 
+.progress-bar {
+    width: 100%;
+    background: #e0e0e0;
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* La parte que se llena */
 .progress-fill {
-    width: 50%; /* Esto se animaría con JS */
+    width: 0%; /* Empieza en cero */
     height: 100%;
-    background: #611232;
-    transition: width 0.5s;
+    background: linear-gradient(90deg, #611232, #a01e52);
+    transition: width 0.4s ease; /* Movimiento suave */
+    position: relative;
+}
+
+/* Efecto de brillo animado */
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-image: linear-gradient(
+        -45deg, 
+        rgba(255, 255, 255, .2) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, .2) 50%, 
+        rgba(255, 255, 255, .2) 75%, 
+        transparent 75%, 
+        transparent
+    );
+    background-size: 50px 50px;
+    animation: move-stripes 2s linear infinite;
+}
+
+@keyframes move-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 50px 50px; }
+}
+
+#statusText {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #611232;
+    font-weight: bold;
 }
 
 #fileInput:valid + #fileLabel {
