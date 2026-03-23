@@ -1,4 +1,21 @@
 <?php
+
+// Función para limpiar archivos viejos (más de 1 hora)
+function limpiarArchivosViejos($carpeta) {
+    $horas = 1;
+    $segundos = $horas * 3600;
+    $archivos = glob($carpeta . "*");
+    
+    foreach ($archivos as $archivo) {
+        if (is_file($archivo) && (time() - filemtime($archivo) > $segundos)) {
+            unlink($archivo);
+        }
+    }
+}
+
+// Ejecutar limpieza al iniciar el script
+limpiarArchivosViejos(__DIR__ . '/temp/');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['documento'])) {
     $archivo = $_FILES['documento'];
     $nombreOriginal = $archivo['name'];
@@ -44,6 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['documento'])) {
     $comandoGS = "gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sColorConversionStrategy=Gray -dProcessColorModel=/DeviceGray -sOutputFile=\"$pdfFinal\" \"$pdfIntermedio\"";
     
     shell_exec($comandoGS);
+
+    // PASO 4: Limpieza de residuos inmediatos
+    // Borramos el archivo original (docx o pdf inicial)
+    if (file_exists($rutaSubido)) {
+        unlink($rutaSubido);
+    }
+
+    // Borramos el PDF intermedio (el que se creó antes del QR)
+    if (file_exists($pdfIntermedio) && $pdfIntermedio != $rutaSubido) {
+        unlink($pdfIntermedio);
+    }
+
+    // Borramos la imagen del QR temporal
+    if (isset($qrImagen) && file_exists($qrImagen)) {
+        unlink($qrImagen);
+    }
 
     // PASO 3: Respuesta para el usuario
     if (file_exists($pdfFinal)) {
