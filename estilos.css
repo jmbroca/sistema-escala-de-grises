@@ -1,0 +1,91 @@
+body {
+    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #611232;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.file-input-container {
+    margin-bottom: 1.5rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#fileLabel {
+    display: block;
+    padding: 15px;
+    border: 2px dashed #611232;
+    color: #611232;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+#fileLabel:hover {
+    background: #61123210;
+}
+
+.btn-convert {
+    background-color: #611232;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.btn-download {
+    display: block;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Barra de progreso */
+.progress-bar {
+    width: 100%;
+    background: #eee;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.progress-fill {
+    width: 50%; /* Esto se animaría con JS */
+    height: 100%;
+    background: #611232;
+    transition: width 0.5s;
+}
+
+#fileInput:valid + #fileLabel {
+    border-style: solid;
+    background-color: #61123205; /* Un toque muy leve de vino */
+}
