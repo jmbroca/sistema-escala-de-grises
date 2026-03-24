@@ -59,10 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['documento'])) {
     // PASO 2: Ghostscript (Escala de grises + Eliminar Metadatos)
     // El parámetro -dProcessColorModel=/DeviceGray hace la magia del color
     $comandoGS = "gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sColorConversionStrategy=Gray -dProcessColorModel=/DeviceGray -sOutputFile=\"$pdfFinal\" \"$pdfIntermedio\"";
-    
     shell_exec($comandoGS);
 
-    // PASO 4: Limpieza de residuos inmediatos
+    // PASO 2.5: ELIMINACIÓN RADICAL DE METADATOS CON EXIFTOOL (VERSIÓN AGRESIVA)
+    if (file_exists($pdfFinal)) {
+        $rutaExifTool = __DIR__ . '/herramientas/exiftool.exe';
+        
+        // Vaciamos explícitamente las etiquetas nativas del PDF que suelen sobrevivir
+        $comandoExif = "\"$rutaExifTool\" -Title= -Author= -Subject= -Creator= -Producer= -Keywords= -CreateDate= -ModifyDate= -overwrite_original \"$pdfFinal\"";
+        
+        shell_exec($comandoExif);
+    }
+
+    // PASO 3: Limpieza de residuos inmediatos
     // Borramos el archivo original (docx o pdf inicial)
     if (file_exists($rutaSubido)) {
         unlink($rutaSubido);
@@ -78,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['documento'])) {
         unlink($qrImagen);
     }
 
-    // PASO 3: Respuesta para el usuario
+    // PASO 4: Respuesta para el usuario
     if (file_exists($pdfFinal)) {
         // Enviamos una respuesta simple que el JavaScript del index leerá
         echo "SUCCESS:" . 'temp/' . basename($pdfFinal);
