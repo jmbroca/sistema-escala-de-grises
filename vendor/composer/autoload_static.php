@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit394db9ff3e8bed461b3131f49f543b23
+class ComposerStaticInit4a6a7398bf6ec7650c5460579417cb7c
 {
     public static $prefixLengthsPsr4 = array (
         's' =>
@@ -22,26 +22,15 @@ class ComposerStaticInit394db9ff3e8bed461b3131f49f543b23
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
-        'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
-        'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
-        'TCPDF' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf.php',
-        'TCPDF2DBarcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_barcodes_2d.php',
-        'TCPDFBarcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_barcodes_1d.php',
-        'TCPDF_COLORS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_colors.php',
-        'TCPDF_FILTERS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_filters.php',
-        'TCPDF_FONTS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_fonts.php',
-        'TCPDF_FONT_DATA' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_font_data.php',
-        'TCPDF_IMAGES' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_images.php',
-        'TCPDF_STATIC' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_static.php',
+        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit394db9ff3e8bed461b3131f49f543b23::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit394db9ff3e8bed461b3131f49f543b23::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit394db9ff3e8bed461b3131f49f543b23::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4a6a7398bf6ec7650c5460579417cb7c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4a6a7398bf6ec7650c5460579417cb7c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4a6a7398bf6ec7650c5460579417cb7c::$classMap;
 
         }, null, ClassLoader::class);
     }
