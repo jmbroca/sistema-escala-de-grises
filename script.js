@@ -56,8 +56,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 setTimeout(() => {
                     downloadBtn.style.display = 'block';
+                    document.getElementById('uploadSection').style.display = 'block';
                 }, 500);
                 
+                // 2. Darle función al botón de subir
+                const btnUpload = document.getElementById('btnUploadServer');
+                const uploadStatus = document.getElementById('uploadStatusText');
+                
+                btnUpload.onclick = async () => {
+                    // Tomamos el nombre escrito, o ponemos uno por defecto si lo dejaron en blanco
+                    let customName = document.getElementById('customFileName').value.trim();
+                    if(customName === "") customName = "documento_procesado";
+
+                    uploadStatus.innerText = "Conectando con el servidor...";
+                    btnUpload.disabled = true;
+
+                    const upData = new FormData();
+                    upData.append('rutaArchivo', fileUrl);
+                    upData.append('nombrePersonalizado', customName);
+
+                    try {
+                        const upRes = await fetch('subir_servidor.php', { method: 'POST', body: upData });
+                        const upText = await upRes.text();
+                        uploadStatus.innerText = upText;
+                        btnUpload.disabled = false;
+                    } catch (err) {
+                        uploadStatus.innerText = "Error de conexión al intentar subir.";
+                        btnUpload.disabled = false;
+                    }
+                };
             } else {
                 fill.style.width = '100%';
                 fill.style.background = "#ff4444"; 
