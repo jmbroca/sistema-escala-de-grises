@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['documento'])) {
         $pdfIntermedio = $rutaSubido; // Ya era PDF
     }
 
-    // PASO 2: Ghostscript (Escala de grises + Eliminar Metadatos)
-    // El parámetro -dProcessColorModel=/DeviceGray hace la magia del color
-    $comandoGS = "gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sColorConversionStrategy=Gray -dProcessColorModel=/DeviceGray -sOutputFile=\"$pdfFinal\" \"$pdfIntermedio\"";
+    // PASO 2: Ghostscript Portable (Escala de grises + Bloqueo de metadatos)
+    $rutaGS = __DIR__ . '/herramientas/ghostscript/bin/gswin64c.exe';
+    $comandoGS = "\"$rutaGS\" -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sColorConversionStrategy=Gray -dProcessColorModel=/DeviceGray -dUseDocumentInfo=false -sOutputFile=\"$pdfFinal\" \"$pdfIntermedio\"";  
     shell_exec($comandoGS);
 
     // PASO 3: ELIMINACIÓN RADICAL DE METADATOS CON EXIFTOOL (VERSIÓN AGRESIVA)
